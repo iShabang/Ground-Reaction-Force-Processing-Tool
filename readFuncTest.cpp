@@ -4,80 +4,39 @@
 #include <vector>
 #include <iomanip>
 #include "gnuplot-iostream.h"
-
-/*Function reads the data file, converts the strings to doubles, and pushes the data into the corresponding vectors
-Parameters
-  &input - address of the input file
-  &DarkGrey - address of the DarkGrey vector. Holds x and y coordinates. 
-  &LightGrey - address of the LightGrey plate vector. Holds x and y coordinates.
-No return value
-*/
-void readVector(std::ifstream &input, std::vector<std::pair<double, double> > &DarkGrey, std::vector<std::pair<double, double> > &LightGrey){
-
-    //String values for reading
-    std::string time, plate1, plate2, garbage;
-
-    //Double values after conversion
-    double t, p1, p2;
-
-    input.open("testData");
-
-    //Skip the first 13 lines of text
-    for(int i=0; i<13; i++){
-	    std::getline(input, garbage);
-    }
-
-    //Read in data points. Loop for number of miliseconds.
-    for(int i=0; i<5000; i++){
-	getline(input, time, '\t');
-
-	//Skip plate1 fx & fy
-	getline(input, garbage, '\t');
-	getline(input, garbage, '\t');
-
-	//grab plate1 fz
-	getline(input, plate1, '\t');
-
-	//skip plate2 fx & fy
-	getline(input, garbage, '\t');
-	getline(input, garbage, '\t');
-
-	//grab plate2 fz
-	getline(input, plate2, '\n');
-
-	//convert strings to doubles
-	t = std::stod(time);
-	p1 = std::stod(plate1);
-	p2 = std::stod(plate2);
-
-	//move values into vectors
-	DarkGrey.push_back(std::make_pair(t,p1));
-	LightGrey.push_back(std::make_pair(t,p2));
-
-    }
-
-    input.close();
-
-
-}
-
-
+#include "readFunc.h"
+#include "formulas.h"
 
 int main(){
     int dataSize = 10000;
+    double mass, Fg;
     std::ifstream input;
     Gnuplot gp;
     
 
     //Create vectors
-    std::vector<std::pair<double, double> > DarkGrey;
-    std::vector<std::pair<double, double> > LightGrey;
+    std::vector<std::pair<double, double> > plate1;
+    std::vector<std::pair<double, double> > plate2;
+    std::vector<std::pair<double, double> > acc;
+    std::vector<std::pair<double, double> > vel;
+    std::vector<std::pair<double, double> > pos;
+
 
     //Read data into vectors
-    readVector(input, DarkGrey, LightGrey);
+    readVector(input, plate1, plate2);
 
+    //get mass
+    mass = calcMass(plate1);
 
-    gp << "plot" << gp.file1d(DarkGrey) << "with lines title 'DarkGrey'" << std::endl; 
+    //get Fg
+    Fg = calcGravity(mass);
+
+    //calculate PVA
+    for(int i=0; i<5000; i++){
+	acc.push_back(std::make_pair(plate1[i].first,calcAcc(plate1[i].second, mass, Fg)));
+	vel.push_back(std::make_pair(plate1[i].first,calcVel(acc[i].second, plate1[i].first)));
+	pos.push_back(std::make_pair(plate1[i].first,calcPos(vel[i].second, plate1[i].first)));
+    }
 
 
 
@@ -85,8 +44,22 @@ int main(){
     //Print out DarkGrey
    /* std::cout << std::right << std::fixed << std::setprecision(6);
     for(int i=0; i<5000; i++){
-	std::cout << "x = " << DarkGrey[i].first << "\ty = " << DarkGrey[i].second << std::endl;
-    }*/
+	std::cout << "x = " << plate1[i].first << "\ty = " << plate1[i].second << std::endl;
+    }
+*/
+
+    gp << "set terminal wxt 1" << std::endl;
+    gp << "plot" << gp.file1d(plate1) << "with lines title 'plate1'" << std::endl; 
+
+    gp << "set terminal wxt 2" << std::endl;
+    gp << "plot" << gp.file1d(acc) << "with lines title 'acc'" << std::endl; 
+
+    gp << "set terminal wxt 3" << std::endl;
+    gp << "plot" << gp.file1d(vel) << "with lines title 'vel'" << std::endl; 
+
+    gp << "set terminal wxt 4" << std::endl;
+    gp << "plot" << gp.file1d(pos) << "with lines title 'pos'" << std::endl; 
+
 
 
     return 0;
