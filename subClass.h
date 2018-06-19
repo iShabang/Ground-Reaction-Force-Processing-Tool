@@ -14,13 +14,18 @@ class Subject
     public:
         Subject();
         Subject(std::string , std::string , int);               // order of input name, motion, trial
-        void readInData()                                       // calls read function
-        double getPVA();                                        // that is being built
+        //void getData()                                        // calls autoRead()
+        //double getPVA();                                        // that is being built
 
     private:
+        string buildString();                                   // victorback <-> victorvert
+        std::fileName;                                          // fileName = string created
         std::string name, motion;                               // String Variables for name and type of motion
         int trials;
-        std::vector<std::pair<double, double> > *backTucks;     // Array of vectors dynamically allocated.
-        std::vector<std::pair<double, double> > *vertJumps;     // Array of vectors dynamically allocated.
+        // array of pointers of vectors
+        //      each pointer points to each vector - velo, accel, pos
+        //
+        //std::vector<std::pair<double, double> > *backTucks;     // Array of vectors dynamically allocated.
+        //std::vector<std::pair<double, double> > *vertJumps;     // Array of vectors dynamically allocated.
 };
 #endif

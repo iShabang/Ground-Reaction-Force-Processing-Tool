@@ -28,12 +28,25 @@ Subject::Subject(string n, string m, int t)
 }
 
 /*****************************************************************************************
+ * Function Name:   buildString
+ * Parameters:      NONE
+ * Return Type:     String
+ * Purpose:         Buids the file name adding two string together. 
+ *                  victorvert <-> victorback
+*****************************************************************************************/
+string Subject::buildString()
+{
+    fileName = name;
+    fileName.append(motion);
+}
+
+/*****************************************************************************************
  * Function Name:   readInData()
  * Parameters:      NONE
  * Return Type:     Void
  * Purpose:         Reads in data using function defined in readFunc header
 *****************************************************************************************/
-void Subject::Subject()
-{
-    readVector();
-}
+//void Subject::Subject()
+//{
+//    readVector();
+//}
