@@ -3,12 +3,16 @@
 #include <iostream>
 #include <vector>
 
+//calculate pva
+void PVA(std::vector<std::pair<double, double> > &grf, std::vector<std::pair<double, double> > &acc, std::vector<std::pair<double, double> > &vel, std::vector<std::pair<double, double> > &pos);
+
+
 //Calculate position
-double calcPos(const double& vel, const double& time);
+double calcPos(const double& vel, const double& time, const double& Pi);
 
 
 //Calculate velocity
-double calcVel(const double& acc, const double& time);
+double calcVel(const double& acc, const double& time, const double& Vi);
 
 
 //Calculate acceleration
@@ -27,6 +31,6 @@ double calcGravity(const double& mass);
 
 //Calculate mass
 //requires Vector to find force in Newtons
-double calcMass(std::vector<std::pair<double, double> > &plateData);
+double calcMass(const std::vector<std::pair<double, double> > &plateData);
 
 #endif
