@@ -6,6 +6,7 @@
 #include "gnuplot-iostream.h"
 #include "readFunc.h"
 #include "formulas.h"
+#include "subClass.h"
 
 int main(){
     int dataSize = 10000;

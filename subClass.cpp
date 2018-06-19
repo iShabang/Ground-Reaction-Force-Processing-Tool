@@ -1,21 +1,39 @@
-#include <vector>
-#include <string>
+#include "subClass.h"
 
-class Subject
+/*****************************************************************************************
+ * Function Name:   Subject - Default Constructor
+ * Parameters:      NONE
+ * Return Type:     NONE
+ * Purpose:         Initializes all private members to their default 
+*****************************************************************************************/
+Subject::Subject()
 {
-    public:
-        Subject();
-        Subject(std::string, int);
-        int getTrials() const;
-        std::string getName() const;
+    name = "";
+    motion = "";
+    trials = 0;
+}
 
+/*****************************************************************************************
+ * Function Name:   Subject - constructor with parameters
+ * Parameters:      NONE
+ * Return Type:     NONE
+ * Purpose:         Initializes object with private members assigned to values given in
+ *                  parameters.
+*****************************************************************************************/
+Subject::Subject(string n, string m, int t)
+{
+    name = n;
+    motion = m;
+    trials = t;
+}
 
-    private:
-        std::string name;            // Name of the subject
-        int trials;
-        std::vector<std::pair<double, double> > *backTucks;      // Array of vectors dynamically allocated.
-        std::vector<std::pair<double, double> > *vertJumps;      // Array of vectors dynamically allocated.
-
-        //input name, movement type, number of trials
-
-};
+/*****************************************************************************************
+ * Function Name:   readInData()
+ * Parameters:      NONE
+ * Return Type:     Void
+ * Purpose:         Reads in data using function defined in readFunc header
+*****************************************************************************************/
+void Subject::Subject()
+{
+    readVector();
+}
