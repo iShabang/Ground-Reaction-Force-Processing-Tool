@@ -18,8 +18,8 @@ class Subject
         //double getPVA();                                        // that is being built
 
     private:
-        string buildString();                                   // victorback <-> victorvert
-        std::fileName;                                          // fileName = string created
+        std::string buildString();                                   // victorback <-> victorvert
+        std::string fileName;                                          // fileName = string created
         std::string name, motion;                               // String Variables for name and type of motion
         int trials;
         // array of pointers of vectors

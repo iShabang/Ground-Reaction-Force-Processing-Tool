@@ -8,12 +8,21 @@
 #include "formulas.h"
 #include "subClass.h"
 
-int main(){
+int main()
+{
     int dataSize = 10000;
     double mass, Fg;
     std::ifstream input;
     Gnuplot gp;
-    
+    Subject *sub;
+
+/*******************************************************************
+ * This section will ask for necessary varaibles to create an object
+*******************************************************************/
+    std::cout << "Welcome to the force platform data collection program." << std::endl;
+    std::cout << "We will ask you to fill out a couple of inputs to continue with our program." << std::endl;
+
+
 
     //Create vectors
     std::vector<std::pair<double, double> > plate1;

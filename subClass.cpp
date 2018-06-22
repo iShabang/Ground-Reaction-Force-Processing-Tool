@@ -38,6 +38,7 @@ string Subject::buildString()
 {
     fileName = name;
     fileName.append(motion);
+    return fileName;
 }
 
 /*****************************************************************************************
