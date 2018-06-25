@@ -12,7 +12,7 @@ No return value
 
 Need to create string parameter for file name.
 */
-void readVector(std::ifstream &input, std::vector<std::pair<double, double> > &ForcePlate1, std::vector<std::pair<double, double> > &ForcePlate2){
+void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1 /*, std::vector<std::pair<double, double> > &ForcePlate2*/){
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
@@ -28,7 +28,7 @@ void readVector(std::ifstream &input, std::vector<std::pair<double, double> > &F
 
     //small integer for 
 
-    input.open("testData");
+    input.open(fileName);
 
     //Skip the first 13 lines of text
     for(int i=0; i<12; i++){
@@ -107,7 +107,7 @@ Possible solution 3: create separate functions for different number of plates.
 	ForcePlate1.push_back(std::make_pair(t,Fz1));
 	
 	//if # of columns = 6, then read in another plate for the current line.
-	if(dataColumns==6){
+/*	if(dataColumns==6){
 
 	    //skip plate2 fx & fy
 	    getline(input, garbage, '\t');
@@ -121,10 +121,57 @@ Possible solution 3: create separate functions for different number of plates.
 
 	    //move values into vectors
 	    ForcePlate2.push_back(std::make_pair(t,Fz2));
-	}
 
+	}
+*/
     }
 
     input.close();
 
 }
+
+
+
+
+/*AUTO READ FUNCTION
+1. Function will take in a string consisting of "Name" + "movement".
+Using an index, we will add a number to the end of the string.
+This will be a filename (file must exist and number of files must be known)
+example: let i = 3, name = "Shaun", movment = "VertJump"
+convert i to character "3"
+add strings together to form "ShaunVertJump3"
+
+2. Open file and read data
+
+3. loop until all files are read (until i = # of files)
+
+*/
+
+std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, std::string fileName, int numTrials){
+
+  std::vector<std::pair<double, double> >* dataVectors = new std::vector<std::pair<double, double> >[numTrials];
+
+  std::string fileEnd, fullName;
+
+  for(int i=1; i <= numTrials; i++){
+    fileEnd = std::to_string(i);
+    fullName = fileName + fileEnd + ".txt";
+    std::cout << fullName << std::endl;
+    readVector(input, fullName, dataVectors[i-1]);
+
+  } 
+
+  return dataVectors;
+
+
+}
+
+
+
+
+
+
+
+
+
+
