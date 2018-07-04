@@ -4,11 +4,16 @@
 #include <fstream>
 #include <vector>
 
-void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1 /*, std::vector<std::pair<double, double> > &ForcePlate2*/);
+
+void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1);
 
 
 
-std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, std::string fileName, int numTrials);
+void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, std::vector<std::pair<double, double> > &ForcePlate2);
+
+
+
+std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, int sub, int cond, int numTrials);
 
 
 #endif
