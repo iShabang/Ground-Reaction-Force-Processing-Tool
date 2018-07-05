@@ -73,7 +73,7 @@ Parameters
 No return value
 
 */
-void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, std::vector<std::pair<double, double> > &ForcePlate2){
+void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &plate1, const int &duration){
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
@@ -87,27 +87,27 @@ void readVector(std::ifstream &input, std::string fileName, std::vector<std::pai
     //Double values after conversion
     double t, Fz1, Fz2;
 
+    //Create a second vector. They will be combined after the data is read.
+    std::vector<std::pair<double, double> > plate2;
+
     //small integer for 
 
     input.open(fileName);
 
     //Skip the first 13 lines of text
-    for(int i=0; i<12; i++){
+    for(int i=0; i<13; i++){
 	    std::getline(input, garbage);
     }
 
 
 
     //Read in data points. Loop for number of miliseconds.
-    for(int i=0; i<5000; i++){
+    for(int i=0; i<duration; i++){
 	getline(input, time, '\t');
-//	std::cout << "time = " << time << std::endl;
+	std::cout << "time = " << time << std::endl;
 //	std::cin.get();
 
 
-	//Skip plate1 fx & fy
-	getline(input, garbage, '\t');
-	getline(input, garbage, '\t');
 
 	//grab plate1 fz
 	getline(input, Fz1String, '\t');
@@ -117,12 +117,8 @@ void readVector(std::ifstream &input, std::string fileName, std::vector<std::pai
 	Fz1 = std::stod(Fz1String);
 
 	//move values into vectors
-	ForcePlate1.push_back(std::make_pair(t,Fz1));
+	plate1.push_back(std::make_pair(t,Fz1));
 	
-
-	//skip plate2 fx & fy
-	getline(input, garbage, '\t');
-	getline(input, garbage, '\t');
 
 	//grab plate2 fz
 	getline(input, Fz2String, '\n');
@@ -131,11 +127,13 @@ void readVector(std::ifstream &input, std::string fileName, std::vector<std::pai
 	Fz2 = std::stod(Fz2String);
 
 	//move values into vectors
-	ForcePlate2.push_back(std::make_pair(t,Fz2));
+	plate2.push_back(std::make_pair(t,Fz2));
 	
     }
 
     input.close();
+
+    combineVectors(plate1, plate2);
 
 }
 
@@ -179,7 +177,21 @@ std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, int sub,
 
 
 
+/*COMBINE VECTORS
+function will take data from two force plates and add them together to create one vector for graphing. 
+Current implimentation: add y values together. This method will cause some inaccuracy due to the impact forces from the landing. Some of the force will dissapate to the neighboring plate.
+No return value. All operations occur on the first vector passed in. 
 
+*/
+void combineVectors(std::vector<std::pair<double,double> > &plate1, std::vector<std::pair<double, double> > &plate2){
+  int size = plate1.size();
+  for(int i=0; i<size; i++){
+    plate1[i].second = plate1[i].second + plate2[i].second;
+
+  }
+
+
+}
 
 
 
