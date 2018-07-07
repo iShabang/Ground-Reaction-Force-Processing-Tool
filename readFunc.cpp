@@ -12,7 +12,10 @@ Data will be read from the file into the passed vector
 No return value
 */
 
-void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1){
+void readVector(std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, int duration){
+
+    //create an fstream object for reading
+    std::ifstream input;
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
@@ -35,7 +38,7 @@ void readVector(std::ifstream &input, std::string fileName, std::vector<std::pai
 
     //Read in data points. Loop for number of miliseconds.
 
-    for(int i=0; i<5000; i++){
+    for(int i=0; i<duration; i++){
 	getline(input, time, '\t');
 //	std::cout << "time = " << time << "\t";
 	//std::cin.get();
@@ -73,7 +76,10 @@ Parameters
 No return value
 
 */
-void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &plate1, const int &duration){
+void read2Plates(std::string fileName, std::vector<std::pair<double, double> > &plate1, std::vector<std::pair<double, double> > &plate2, const int &duration){
+
+    //create an fstream object for reading
+    std::ifstream input;
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
@@ -87,11 +93,6 @@ void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pa
     //Double values after conversion
     double t, Fz1, Fz2;
 
-    //Create a second vector. They will be combined after the data is read.
-    std::vector<std::pair<double, double> > plate2;
-
-    //small integer for 
-
     input.open(fileName);
 
     //Skip the first 13 lines of text
@@ -104,7 +105,7 @@ void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pa
     //Read in data points. Loop for number of miliseconds.
     for(int i=0; i<duration; i++){
 	getline(input, time, '\t');
-	std::cout << "time = " << time << std::endl;
+//	std::cout << "time = " << time << std::endl;
 //	std::cin.get();
 
 
@@ -133,8 +134,6 @@ void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pa
 
     input.close();
 
-    combineVectors(plate1, plate2);
-
 }
 
 
@@ -154,7 +153,7 @@ add strings together to form "ShaunVertJump3"
 
 */
 
-std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, int sub, int cond, int numTrials){
+std::vector<std::pair<double, double> >* autoRead(int sub, int cond, int numTrials, int duration){
 
   std::vector<std::pair<double, double> >* dataVectors = new std::vector<std::pair<double, double> >[numTrials];
 
@@ -163,17 +162,57 @@ std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, int sub,
   subject = std::to_string(sub);
   condition = std::to_string(cond);
  
-
   for(int i=1; i <= numTrials; i++){
     trial = std::to_string(i);
     fullName = "S" + subject + "C" + condition + "T" + trial + ".txt";
-    readVector(input, fullName, dataVectors[i-1]);
+    readVector(fullName, dataVectors[i-1], duration);
+  } 
+  
+
+  return dataVectors;
+
+
+}
+
+
+
+
+
+
+/*AUTO READ 2 PLATES
+Function reads in all data for subject that used two force platforms
+Each trial will yield two separate vectors
+
+*/
+std::vector<std::pair<double, double> >* autoRead2Plates(int sub, int cond, int numTrials, int duration){
+
+  std::vector<std::pair<double, double> >* dataVectors = new std::vector<std::pair<double, double> >[numTrials*2];
+
+  std::string trial, subject, condition, fullName;
+
+  subject = std::to_string(sub);
+  condition = std::to_string(cond);
+ 
+  int j = 0;  
+
+  for(int i=1; i < numTrials*2; i = i+2){
+    j = i/2 + 1;
+    trial = std::to_string(j);
+    fullName = "S" + subject + "C" + condition + "T" + trial + ".txt";
+    std::cout << "reading " << fullName << std::endl;
+    read2Plates(fullName, dataVectors[i-1], dataVectors[i], duration);
   } 
 
   return dataVectors;
 
 
 }
+
+
+
+
+
+
 
 
 

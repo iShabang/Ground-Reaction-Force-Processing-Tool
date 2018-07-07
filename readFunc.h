@@ -5,15 +5,15 @@
 #include <vector>
 
 
-void readVector(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1);
+void readVector(std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, int duration);
 
 
 
-void read2Plates(std::ifstream &input, std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, const int &duration);
+void read2Plates(std::string fileName, std::vector<std::pair<double, double> > &plate1, std::vector<std::pair<double, double> > &plate2, const int &duration);
 
+std::vector<std::pair<double, double> >* autoRead(int sub, int cond, int numTrials, int duration);
 
-
-std::vector<std::pair<double, double> >* autoRead(std::ifstream &input, int sub, int cond, int numTrials);
+std::vector<std::pair<double, double> >* autoRead2Plates(int sub, int cond, int numTrials, int duration);
 
 void combineVectors(std::vector<std::pair<double,double> > &plate1, std::vector<std::pair<double, double> > &plate2);
 
