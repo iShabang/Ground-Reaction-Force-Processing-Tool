@@ -22,7 +22,7 @@ void buildData(std::string fileName, int duration){
     std::string time, Fz1String, Fz2String, garbage, ifileName, ofileName;
  
     ifileName = fileName + ".txt";
-    ofileName = fileName + ".data";
+    ofileName = fileName + ".dat";
 
     input.open(ifileName);
     output.open(ofileName);

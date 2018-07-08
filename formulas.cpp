@@ -1,11 +1,25 @@
 #include <vector>
+#include <fstream>
 #include "formulas.h"
 
 //calculate PVA
 //creates acc, vel, and pos vectors
-void	PVA(std::vector<std::pair<double,double> > &grf, std::vector<std::pair<double,double> > &acc, std::vector<std::pair<double,double> > &vel, std::vector<std::pair<double,double> > &pos){
+void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
-    double mass, Fg, time;
+    std::ofstream output1, output2, output3;
+
+    double mass, Fg, time, Vi, Pi, pos, vel, acc;
+
+    //create file names
+    std::string posDat, velDat, accDat;
+    posDat = fileName + "P.dat";
+    velDat = fileName + "V.dat";
+    accDat = fileName + "A.dat";
+
+    //open files
+    output1.open(posDat);
+    output2.open(velDat);
+    output3.open(accDat);
 
     //get mass
     mass = calcMass(grf);
@@ -16,18 +30,28 @@ void	PVA(std::vector<std::pair<double,double> > &grf, std::vector<std::pair<doub
     //initialize time to 1000HZ
     time = .001;
 
-    //initial vector values
-    acc.push_back(std::make_pair(grf[0].first,calcAcc(grf[0].second, mass, Fg)));
-    vel.push_back(std::make_pair(grf[0].first,calcVel(acc[0].second, grf[0].first, 0)));
-    pos.push_back(std::make_pair(grf[0].first,calcPos(vel[0].second, grf[0].first, 0)));
+    //initialize pos and vel
+    vel = 0;
+    pos = 0;
 
-    //build the remaining values and push them onto the vectors
-    for(int i=1; i<5000; i++){
-	acc.push_back(std::make_pair(grf[i].first,calcAcc(grf[i].second, mass, Fg)));
-	vel.push_back(std::make_pair(grf[i].first,calcVel(acc[i].second, time, vel[i-1].second)));
-	pos.push_back(std::make_pair(grf[i].first,calcPos(vel[i].second, time, pos[i-1].second)));
+    //calculate values and output to file
+    for(int i=0; i<grf.size(); i++){
+        Vi = vel;
+        Pi = pos;
+	
+	acc = calcAcc(grf[i].second, mass, Fg);
+	vel = calcVel(acc, time, Vi);
+	pos = calcPos(vel, time, Pi);
+
+	output1 << grf[i].first << ' ' << pos << '\n';
+	output2 << grf[i].first << ' ' << vel << '\n';
+	output3 << grf[i].first << ' ' << acc << '\n';
+        
     }
 
+    output1.close();
+    output2.close();
+    output3.close();
 }
 
 

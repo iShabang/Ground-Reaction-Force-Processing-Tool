@@ -4,8 +4,7 @@
 #include <vector>
 
 //calculate pva
-void PVA(std::vector<std::pair<double, double> > &grf, std::vector<std::pair<double, double> > &acc, std::vector<std::pair<double, double> > &vel, std::vector<std::pair<double, double> > &pos);
-
+void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf);
 
 //Calculate position
 double calcPos(const double& vel, const double& time, const double& Pi);
