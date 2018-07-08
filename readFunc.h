@@ -5,16 +5,12 @@
 #include <vector>
 
 
-void readVector(std::string fileName, std::vector<std::pair<double, double> > &ForcePlate1, int duration);
+void buildData(std::string fileName, int duration);
 
+void buildData2Plates(std::string fileName, const int &duration);
 
+void autoRead(int sub, int cond, int numTrials, int duration);
 
-void read2Plates(std::string fileName, std::vector<std::pair<double, double> > &plate1, std::vector<std::pair<double, double> > &plate2, const int &duration);
-
-std::vector<std::pair<double, double> >* autoRead(int sub, int cond, int numTrials, int duration);
-
-std::vector<std::pair<double, double> >* autoRead2Plates(int sub, int cond, int numTrials, int duration);
-
-void combineVectors(std::vector<std::pair<double,double> > &plate1, std::vector<std::pair<double, double> > &plate2);
+void autoRead2Plates(int sub, int cond, int numTrials, int duration);
 
 #endif
