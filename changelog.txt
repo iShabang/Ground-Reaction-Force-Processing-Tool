@@ -11,5 +11,8 @@ All new changes should be documented here
 
 Issues:
  - When calculating PVA for data containing two plates, the graphs are nowhere near correct. The function works perfectly with data containing one plate. I tried graphing the individual ground reaction force data for two place, and the graphs were perfect. This needs to be resolved ASAP as most of our data now uses two plates. 
+ 
+Update: The problem might have to do with mass. One of the plates starts at 0, throwing off all the calculations. Might need to determine mass for each subject before calling the PVA function. 
+ 
 ***********************************************
 
