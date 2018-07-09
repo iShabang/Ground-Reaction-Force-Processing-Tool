@@ -1,0 +1,15 @@
+Change Log
+All new changes should be documented here
+***********************************************
+7/8/2018
+- no longer using vectors to store data
+- data is parsed and written to a new .dat file
+- gnuplot can graph straight from files, therefore this will reduce the overall memory usage and overhead costs of passing the large vector objects. 
+- class will no longer need vector pointers for data collection. All processed data will be moved to corresponding .dat files.
+- PVA function only uses one vector to hold ground reaction force. All calculated values are output to a separate .dat file for gnuplot to graph.
+- data containing two plates will be separated into two different .dat files.
+
+Issues:
+ - When calculating PVA for data containing two plates, the graphs are nowhere near correct. The function works perfectly with data containing one plate. I tried graphing the individual ground reaction force data for two place, and the graphs were perfect. This needs to be resolved ASAP as most of our data now uses two plates. 
+***********************************************
+
