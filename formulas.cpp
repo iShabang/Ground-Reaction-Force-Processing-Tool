@@ -2,8 +2,12 @@
 #include <fstream>
 #include "formulas.h"
 
-//calculate PVA
-//creates acc, vel, and pos vectors
+/*calculate PVA
+Function calculates the PVA of the data passed in and outputs the data into separate .dat files for Position, Velocity, and Acceleration
+parameters:
+	grf - vector containing ground reaction force vs time
+
+*/
 void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     std::ofstream output1, output2, output3;
@@ -18,13 +22,16 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     //open files
     output1.open(posDat);
+    std::cout << "opening " << fileName << "P.dat" << std::endl;
     output2.open(velDat);
+    std::cout << "opening " << fileName << "V.dat" << std::endl;
     output3.open(accDat);
+    std::cout << "opening " << fileName << "A.dat" << std::endl;
 
     //get mass
     mass = calcMass(grf);
 
-    //get Fg
+    //get Fg (force of gravity)
     Fg = calcGravity(mass);
 
     //initialize time to 1000HZ
@@ -50,13 +57,16 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
     }
 
     output1.close();
+    std::cout << "closing " << fileName << "P.dat" << std::endl;
     output2.close();
+    std::cout << "closing " << fileName << "V.dat" << std::endl;
     output3.close();
+    std::cout << "closing " << fileName << "A.dat" << std::endl;
 }
 
 
 //Calculate position
-//Position = velocity * time 
+//Position = velocity * time + initial position 
 double calcPos(const double& vel, const double& time, const double& Pi){
 
     double pos;
@@ -69,7 +79,7 @@ double calcPos(const double& vel, const double& time, const double& Pi){
 
 
 //Calculate velocity
-//velocity = acceleration * time
+//velocity = acceleration * time + initial velocity
 double calcVel(const double& acc, const double& time, const double& Vi){
 
     double vel;
@@ -114,6 +124,7 @@ double calcGravity(const double& mass){
 
 //Calculate mass
 //requires Vector to find force in Newtons
+//mass = baseline ground reaction force / 9.81
 double calcMass(const std::vector<std::pair<double, double> > &plateData){
 
 //doubles for mass and Fz

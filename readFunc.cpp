@@ -58,16 +58,14 @@ void buildData2Plates(std::string fileName, const int &duration){
 
     //create input and output objects for reading and writing
     std::ifstream input;
-    std::ofstream output;
+    std::ofstream output1, output2;
 
     //String values for reading
-    std::string time, Fz1String, Fz2String, garbage, ifileName, ofileName;
+    std::string time, Fz1String, Fz2String, garbage;
  
-    ifileName = fileName + ".txt";
-    ofileName = fileName + ".dat";
-
-    input.open(ifileName);
-    output.open(ofileName);
+    input.open(fileName + ".txt");
+    output1.open(fileName + "a.dat");
+    output2.open(fileName + "b.dat");
     
 
     //Skip the first 13 lines of text
@@ -78,19 +76,21 @@ void buildData2Plates(std::string fileName, const int &duration){
     //Read in data points. Loop for number of miliseconds.
     for(int i=0; i<duration; i++){
 	getline(input, time, '\t');
-	output << time << ' ';
+	output1 << time << ' ';
+	output2 << time << ' ';
 
 	//grab plate1 fz
 	getline(input, Fz1String, '\t');
-	output << Fz1String << ' ';
+	output1 << Fz1String << '\n';
 
 	//grab plate2 fz
 	getline(input, Fz2String, '\n');
-	output << Fz2String << '\n';
+	output2 << Fz2String << '\n';
 
     }
 
-    output.close(); 
+    output1.close(); 
+    output2.close(); 
 
 
 }
