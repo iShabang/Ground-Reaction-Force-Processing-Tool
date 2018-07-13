@@ -1,0 +1,44 @@
+Change Log
+All new changes should be documented here
+***********************************************
+7/8/2018
+- no longer using vectors to store data
+- data is parsed and written to a new .dat file
+- gnuplot can graph straight from files, therefore this will reduce the overall memory usage and overhead costs of passing the large vector objects. 
+- class will no longer need vector pointers for data collection. All processed data will be moved to corresponding .dat files.
+- PVA function only uses one vector to hold ground reaction force. All calculated values are output to a separate .dat file for gnuplot to graph.
+- data containing two plates will be separated into two different .dat files.
+
+Issues:
+- When calculating PVA for data containing two plates, the graphs are nowhere near correct. The function works perfectly with data containing one plate. I tried graphing the individual ground reaction force data for two place, and the graphs were perfect. This needs to be resolved ASAP as most of our data now uses two plates. 
+
+Update: The problem might have to do with mass. One of the plates starts at 0, throwing off all the calculations. Might need to determine mass for each subject before calling the PVA function. 
+
+***********************************************
+
+
+***********************************************
+7/12/2018
+
+added multiple functions to the subject class
+ - function for building file names
+ - function to create data files
+ - function to calculate pva
+ - function to graph all data files
+
+readFunc
+ - added code to automatically determine how many plates were used
+ - added combine function to combine two separate plates into one data set
+ - added function to read data into a vector
+
+main
+ - manually declares a subject
+ - generates dat files
+ - calculates pva
+ - graphs all data
+
+Issues:
+Our position graphs are yielding incorrect results. This can be fixed by chopping the starting data right when the movement 
+begins. 
+
+***********************************************

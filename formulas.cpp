@@ -22,11 +22,8 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     //open files
     output1.open(posDat);
-    std::cout << "opening " << fileName << "P.dat" << std::endl;
     output2.open(velDat);
-    std::cout << "opening " << fileName << "V.dat" << std::endl;
     output3.open(accDat);
-    std::cout << "opening " << fileName << "A.dat" << std::endl;
 
     //get mass
     mass = calcMass(grf);
@@ -57,11 +54,8 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
     }
 
     output1.close();
-    std::cout << "closing " << fileName << "P.dat" << std::endl;
     output2.close();
-    std::cout << "closing " << fileName << "V.dat" << std::endl;
     output3.close();
-    std::cout << "closing " << fileName << "A.dat" << std::endl;
 }
 
 

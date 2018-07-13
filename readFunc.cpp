@@ -3,6 +3,7 @@
 #include <vector>
 #include "readFunc.h"
 
+#define VEC std::vector<std::pair<double,double> >
 
 /*READ VECTOR
 Function reads data from a text file into a vector of pairs (x and y coordinates).
@@ -58,15 +59,18 @@ void buildData2Plates(std::string fileName, const int &duration){
 
     //create input and output objects for reading and writing
     std::ifstream input;
-    std::ofstream output1, output2;
+    std::ofstream output;
+
+    double Fz1, Fz2, T;
+
+    VEC vecta;
+    VEC vectb;
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
  
     input.open(fileName + ".txt");
-    output1.open(fileName + "a.dat");
-    output2.open(fileName + "b.dat");
-    
+    std::cout << "opening " << fileName + ".txt" << std::endl;
 
     //Skip the first 13 lines of text
     for(int i=0; i<13; i++){
@@ -75,23 +79,40 @@ void buildData2Plates(std::string fileName, const int &duration){
 
     //Read in data points. Loop for number of miliseconds.
     for(int i=0; i<duration; i++){
-	getline(input, time, '\t');
-	output1 << time << ' ';
-	output2 << time << ' ';
+	    getline(input, time, '\t');
+        T = std::stod(time);
 
-	//grab plate1 fz
-	getline(input, Fz1String, '\t');
-	output1 << Fz1String << '\n';
+	    //grab plate1 fz
+	    getline(input, Fz1String, '\t');
+        Fz1 = std::stod(Fz1String);
 
-	//grab plate2 fz
-	getline(input, Fz2String, '\n');
-	output2 << Fz2String << '\n';
+	    //grab plate2 fz
+	    getline(input, Fz2String, '\n');
+        Fz2 = std::stod(Fz2String);
+
+        vecta.push_back(std::make_pair(T, Fz1));
+        vectb.push_back(std::make_pair(T, Fz2));
 
     }
+    std::cout << "vectors built" << std::endl;
+    if(vecta[0].second < 10){
+        std::cout << "vecta starting at zero" << std::endl;
+        int timeFound = 0;
+        while(vecta[timeFound].second < 10)
+            timeFound++;
+        combinePlates(fileName, timeFound, duration, vectb, vecta);
+        std::cout << "plates combines" << std::endl;
+    }
 
-    output1.close(); 
-    output2.close(); 
-
+    else if(vectb[0].second < 10){
+        std::cout << "vectb starting at 0" << std::endl;
+        int timeFound = 0;
+        while(vectb[timeFound].second < 10){
+            timeFound++;
+        }
+        combinePlates(fileName, timeFound, duration, vecta, vectb);
+        std::cout << "plates combined" << std::endl;
+    }
 
 }
 
@@ -115,6 +136,7 @@ add strings together to form "ShaunVertJump3"
 void autoRead(int sub, int cond, int numTrials, int duration){
 
   std::string trial, subject, condition, fullName;
+  int numPlates;
 
   subject = std::to_string(sub);
   condition = std::to_string(cond);
@@ -122,7 +144,11 @@ void autoRead(int sub, int cond, int numTrials, int duration){
   for(int i=1; i <= numTrials; i++){
     trial = std::to_string(i);
     fullName = "S" + subject + "C" + condition + "T" + trial;
-    buildData(fullName, duration);
+    numPlates = testNumPlates(fullName);
+    if(numPlates == 1)
+        buildData(fullName, duration);
+    else if(numPlates == 2)
+        buildData2Plates(fullName, duration);
   } 
   
 
@@ -163,6 +189,72 @@ void autoRead2Plates(int sub, int cond, int numTrials, int duration){
 }
 
 
+/*********************************************************************************************
+ * Function name:      testNumPlates
+ * Paramters:          file name to be opened for testing
+ * Return Value:       number of plates captured
+ * Purpose:            reads the header of the file passed and determines the number of plates
+                       captured
+
+*********************************************************************************************/
+
+int testNumPlates(std::string fileName){
+    std::ifstream input;
+    std::string garbage;
+    char N;
+    int numN = 0;
+    input.open(fileName + ".txt");
+    for(int i=0; i<12; i++)
+        std::getline(input, garbage);
+    while(true){
+        input >> N;
+        std::cout << "N = " << N << std::endl;
+        if(N == 'N')
+            numN++;
+        else
+            break;
+    }
+    return numN;
+}
+
+/*****************************************************************************************
+ * Function Name:   fetchData()
+ * Parameters:      name of the file requested, vector to store data
+ * Return Type:     Void
+ * Purpose:         gets data from the given file and puts it in a vector for processing
+
+*****************************************************************************************/
+void fetchData(std::string fileName, std::vector<std::pair<double, double> > &vect){
+    std::ifstream input; 
+    double time, force;
+    input.open(fileName + ".dat");
+    while(!input.eof()){
+        input >> time >> force;
+        vect.push_back(std::make_pair(time,force));
+   }
+   input.close();
+   return;
+}
+
+/*********************************************************************************************
+ * Function name:      combinePlates
+ * Paramters:          file name to be created, time found, duration, start vector, end vector 
+ * Return Value:       NONE
+ * Purpose:            combines two data sets from plates and puts them into one file for 
+                       processing
+
+*********************************************************************************************/
+
+void combinePlates(std::string fileName, double timeFound, int duration, VEC &vect1, VEC &vect2){
+    std::cout << "combining plates" << std::endl;
+    std::ofstream output;
+    output.open(fileName + ".dat");
+    for(int i=0; i<timeFound; i++)
+        output << vect1[i].first << ' ' << vect1[i].second << '\n';
+    for(int i=timeFound; i<duration; i++)
+        output << vect2[i].first << ' ' << vect2[i].second << '\n';
+    output.close();
+}
 
 
 
