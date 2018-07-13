@@ -41,4 +41,6 @@ Issues:
 Our position graphs are yielding incorrect results. This can be fixed by chopping the starting data right when the movement 
 begins. 
 
+The read functions need to determine the duration on their own. I may just need to use a clever while loop to solve this.
+
 ***********************************************

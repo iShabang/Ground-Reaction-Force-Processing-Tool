@@ -12,6 +12,13 @@ int main()
 {
     std::ifstream input;
     Gnuplot gp;
+
+/*******************************************************************
+ * This section will ask for necessary varaibles to create an object
+*******************************************************************/
+    std::cout << "Welcome to the force platform data collection program." << std::endl;
+	std::cout << "We will ask you to fill out a couple of inputs to continue with our program." << std::endl;
+
     Subject sub1(1,2,5,1,5000);
     Subject sub2(2,2,5,1,5000);
     Subject sub3(3,2,5,1,7000);
