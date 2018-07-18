@@ -9,6 +9,9 @@
 #include "subClass.h"
 
 int main()
+
+// changed one line for test
+
 {
     std::ifstream input;
     Gnuplot gp;
