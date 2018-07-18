@@ -94,7 +94,6 @@ void Subject::createPVA_DAT(){
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
             fileName = buildString(i,j);
-            std::cout << "file name = " << fileName << std::endl;
             fetchData(fileName, vect);
             PVA(fileName, vect);
             vect.clear();
