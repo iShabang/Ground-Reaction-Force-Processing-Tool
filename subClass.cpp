@@ -117,14 +117,14 @@ void Subject::graphAll(){
         for(int j=1; j<=trials; j++){
             fileName = buildString(i,j);
             gp << "set term postscript eps enhanced 'arial' 12 \n";
-            gp << "set output '" << fileName + ".eps'" << "\n";
-            gp << "plot '" << fileName + ".dat" << "' with lines \n";
-            gp << "set output '" << fileName + "P.eps'" << "\n";
-            gp << "plot '" << fileName + "P.dat" << "' with lines \n";
-            gp << "set output '" << fileName + "V.eps'" << "\n";
-            gp << "plot '" << fileName + "V.dat" << "' with lines \n";
-            gp << "set output '" << fileName + "A.eps'" << "\n";
-            gp << "plot '" << fileName + "A.dat" << "' with lines \n";
+            gp << "set output '" << "Graphs/" + fileName + ".eps'" << "\n";
+            gp << "plot '" << "Results/" + fileName + ".dat" << "' with lines \n";
+            gp << "set output '" << "Graphs/" + fileName + "P.eps'" << "\n";
+            gp << "plot '" << "Results/" + fileName + "P.dat" << "' with lines \n";
+            gp << "set output '" << "Graphs/" + fileName + "V.eps'" << "\n";
+            gp << "plot '" << "Results/" + fileName + "V.dat" << "' with lines \n";
+            gp << "set output '" << "Graphs/" + fileName + "A.eps'" << "\n";
+            gp << "plot '" << "Results/" + fileName + "A.dat" << "' with lines \n";
         }
     }
 }
