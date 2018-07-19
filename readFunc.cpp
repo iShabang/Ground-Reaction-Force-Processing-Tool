@@ -15,8 +15,6 @@ No return value
 
 void buildData(std::string fileName, int duration){
    
-    std::cout << "build data started" << std::endl;
-
     //create an fstream object for reading
     std::ifstream input;
     std::ofstream output;
@@ -77,7 +75,7 @@ void buildData2Plates(std::string fileName, const int &duration){
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage;
  
-    input.open(fileName + ".txt");
+    input.open("Data/" + fileName + ".txt");
     std::cout << "opening " << fileName + ".txt" << std::endl;
 
     //Skip the first 13 lines of text
@@ -235,7 +233,7 @@ int testNumPlates(std::string fileName){
 void fetchData(std::string fileName, std::vector<std::pair<double, double> > &vect){
     std::ifstream input; 
     double time, force;
-    input.open(fileName + ".dat");
+    input.open("Results/" + fileName + ".dat");
     while(!input.eof()){
         input >> time >> force;
         vect.push_back(std::make_pair(time,force));
@@ -256,7 +254,7 @@ void fetchData(std::string fileName, std::vector<std::pair<double, double> > &ve
 void combinePlates(std::string fileName, double timeFound, int duration, VEC &vect1, VEC &vect2){
     std::cout << "combining plates" << std::endl;
     std::ofstream output;
-    output.open(fileName + ".dat");
+    output.open("Results/" + fileName + ".dat");
     for(int i=0; i<timeFound; i++)
         output << vect1[i].first << ' ' << vect1[i].second << '\n';
     for(int i=timeFound; i<duration; i++)
