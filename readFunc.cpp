@@ -14,6 +14,8 @@ No return value
 */
 
 void buildData(std::string fileName, int duration){
+   
+    std::cout << "build data started" << std::endl;
 
     //create an fstream object for reading
     std::ifstream input;
@@ -25,8 +27,14 @@ void buildData(std::string fileName, int duration){
     ifileName = fileName + ".txt";
     ofileName = fileName + ".dat";
 
-    input.open(ifileName);
-    output.open(ofileName);
+    input.open("Data/" + ifileName);
+    if(!input)
+        std::cout << "input failed!!" << std::endl;
+    output.open("Results/" + ofileName);
+    if(!output)
+        std::cout << "output failed!!" << std::endl;
+
+    std::cout << "files were successful" << std::endl;
 
     //Skip the first 13 lines of text
     for(int i=0; i<13; i++){
@@ -203,7 +211,7 @@ int testNumPlates(std::string fileName){
     std::string garbage;
     char N;
     int numN = 0;
-    input.open(fileName + ".txt");
+    input.open("Data/" + fileName + ".txt");
     for(int i=0; i<12; i++)
         std::getline(input, garbage);
     while(true){
