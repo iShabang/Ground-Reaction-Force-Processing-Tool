@@ -16,9 +16,9 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     //create file names
     std::string posDat, velDat, accDat;
-    posDat = fileName + "P.dat";
-    velDat = fileName + "V.dat";
-    accDat = fileName + "A.dat";
+    posDat = "Results/" + fileName + "P.dat";
+    velDat = "Results/" + fileName + "V.dat";
+    accDat = "Results/" + fileName + "A.dat";
 
     //open files
     output1.open(posDat);
