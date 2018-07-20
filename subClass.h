@@ -13,7 +13,7 @@ class Subject
 {
     public:
         Subject();
-        Subject(int, int, int, int, int);               // order of input name, motion, trial
+        Subject(int, int, int);               // order of input name, motion, trial
         void createDATfiles();
         void createPVA_DAT();
         void graphAll();
@@ -27,7 +27,5 @@ class Subject
         int sub;
         int trials;
         int cond;
-        int duration;
-        int plates;
 };
 #endif

@@ -14,11 +14,14 @@ Issues:
 
 Update: The problem might have to do with mass. One of the plates starts at 0, throwing off all the calculations. Might need to determine mass for each subject before calling the PVA function. 
 
-***********************************************
+
+
+
 
 
 ***********************************************
 7/12/2018
+***********************************************
 
 added multiple functions to the subject class
  - function for building file names
@@ -43,4 +46,18 @@ begins.
 
 The read functions need to determine the duration on their own. I may just need to use a clever while loop to solve this.
 
+
+
+
 ***********************************************
+7/19/2018
+***********************************************
+
+read functions now automatically find the # of samples taken. Duration requirement 
+is no longer needed. 
+
+All messages were deleted except for errors
+
+All data/graphs/results go into separate folders
+
+

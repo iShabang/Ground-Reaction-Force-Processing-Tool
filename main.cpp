@@ -19,9 +19,9 @@ int main()
     std::cout << "Welcome to the force platform data collection program." << std::endl;
 	std::cout << "We will ask you to fill out a couple of inputs to continue with our program." << std::endl;
 
-    Subject sub1(1,2,5,1,5000);
-    Subject sub2(2,2,5,1,5000);
-    Subject sub3(3,2,5,1,7000);
+    Subject sub1(1,2,5);
+    Subject sub2(2,2,5);
+    Subject sub3(3,2,5);
 
     sub1.createDATfiles();
     sub1.createPVA_DAT();

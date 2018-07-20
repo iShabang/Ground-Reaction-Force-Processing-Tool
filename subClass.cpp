@@ -11,7 +11,6 @@ Subject::Subject()
     sub = 0;
     cond = 0;
     trials = 0;
-    plates = 0;
 }
 
 /*****************************************************************************************
@@ -21,13 +20,11 @@ Subject::Subject()
  * Purpose:         Initializes object with private members assigned to values given in
  *                  parameters.
 *****************************************************************************************/
-Subject::Subject(int s, int c, int t, int p, int d)
+Subject::Subject(int s, int c, int t)
 {
     sub = s;
     cond = c;
     trials = t;
-    duration = d;
-    plates = p;
 }
 
 /*****************************************************************************************
@@ -77,7 +74,7 @@ void Subject::createDATfiles(){
     int c;
     for(int i=1; i<=cond; i++){
         c = i;
-        autoRead(sub, c, trials, duration);
+        autoRead(sub, c, trials);
     }
 }
 

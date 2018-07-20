@@ -6,11 +6,11 @@
 
 #define VEC std::vector<std::pair<double,double> >
 
-void buildData(std::string fileName, int duration);
+void buildData(std::string fileName);
 
-void buildData2Plates(std::string fileName, const int &duration);
+void buildData2Plates(std::string fileName);
 
-void autoRead(int sub, int cond, int numTrials, int duration);
+void autoRead(int sub, int cond, int numTrials);
 
 void autoRead2Plates(int sub, int cond, int numTrials, int duration);
 

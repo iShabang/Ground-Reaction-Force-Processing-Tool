@@ -13,7 +13,7 @@ Data will be read from the file into the passed vector
 No return value
 */
 
-void buildData(std::string fileName, int duration){
+void buildData(std::string fileName){
     //# of samples
     int samples;
 
@@ -69,7 +69,7 @@ Parameters
 No return value
 
 */
-void buildData2Plates(std::string fileName, const int &duration){
+void buildData2Plates(std::string fileName){
 
     //# of samples
     int samples, samplesa;
@@ -122,7 +122,7 @@ void buildData2Plates(std::string fileName, const int &duration){
         int timeFound = 0;
         while(vecta[timeFound].second < 10)
             timeFound++;
-        combinePlates(fileName, timeFound, duration, vectb, vecta);
+        combinePlates(fileName, timeFound, samples, vectb, vecta);
     }
 
     else if(vectb[0].second < 10){
@@ -130,7 +130,7 @@ void buildData2Plates(std::string fileName, const int &duration){
         while(vectb[timeFound].second < 10){
             timeFound++;
         }
-        combinePlates(fileName, timeFound, duration, vecta, vectb);
+        combinePlates(fileName, timeFound, samples, vecta, vectb);
     }
 
 }
@@ -152,7 +152,7 @@ add strings together to form "ShaunVertJump3"
 
 */
 
-void autoRead(int sub, int cond, int numTrials, int duration){
+void autoRead(int sub, int cond, int numTrials){
 
   std::string trial, subject, condition, fullName;
   int numPlates;
@@ -165,9 +165,9 @@ void autoRead(int sub, int cond, int numTrials, int duration){
     fullName = "S" + subject + "C" + condition + "T" + trial;
     numPlates = testNumPlates(fullName);
     if(numPlates == 1)
-        buildData(fullName, duration);
+        buildData(fullName);
     else if(numPlates == 2)
-        buildData2Plates(fullName, duration);
+        buildData2Plates(fullName);
   } 
   
 
@@ -199,7 +199,7 @@ void autoRead2Plates(int sub, int cond, int numTrials, int duration){
     j = i/2 + 1;
     trial = std::to_string(j);
     fullName = "S" + subject + "C" + condition + "T" + trial;
-    buildData2Plates(fullName, duration);
+    buildData2Plates(fullName);
   } 
 
   return;
