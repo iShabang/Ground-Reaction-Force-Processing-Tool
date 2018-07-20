@@ -25,6 +25,7 @@ Subject::Subject(int s, int c, int t)
     sub = s;
     cond = c;
     trials = t;
+    peakValues = new double[c*t];
 }
 
 /*****************************************************************************************
@@ -86,13 +87,19 @@ void Subject::createDATfiles(){
                     file for graphing
 *****************************************************************************************/
 void Subject::createPVA_DAT(){
+    int index;
     std::string fileName;
     std::vector<std::pair<double, double> > vect;
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
+            index = (i-1) * trials + (j-1);
             fileName = buildString(i,j);
+            std::cout << fileName << '\t';
             fetchData(fileName, vect);
-            PVA(fileName, vect);
+            peakValues[index] = PVA(fileName, vect);
+            if(peakValues[index] == 0)
+                return;
+            std::cout << peakValues[index] << std::endl;
             vect.clear();
             vect.shrink_to_fit();
         }

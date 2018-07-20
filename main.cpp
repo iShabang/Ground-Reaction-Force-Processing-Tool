@@ -24,17 +24,16 @@ int main()
     Subject sub3(3,2,5);
 
     sub1.createDATfiles();
-    sub1.createPVA_DAT();
-    sub1.graphAll();
-
     sub2.createDATfiles();
-    sub2.createPVA_DAT();
-    sub2.graphAll();
-    
     sub3.createDATfiles();
-    sub3.createPVA_DAT();
-    sub3.graphAll();
 
+    sub1.createPVA_DAT();
+    sub2.createPVA_DAT();
+    sub3.createPVA_DAT();
+
+    sub1.graphAll();
+    sub2.graphAll();
+    sub3.graphAll();
 
     return 0;
 }

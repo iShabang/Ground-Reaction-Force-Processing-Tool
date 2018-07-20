@@ -8,11 +8,11 @@ parameters:
 	grf - vector containing ground reaction force vs time
 
 */
-void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
+double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     std::ofstream output1, output2, output3;
 
-    double mass, Fg, time, Vi, Pi, pos, vel, acc;
+    double mass, Fg, time, Vi, Pi, pos, vel, acc, peak;
 
     //create file names
     std::string posDat, velDat, accDat;
@@ -22,8 +22,20 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     //open files
     output1.open(posDat);
+    if(!output1){
+        std::cout << posDat << " failed to open. Aborting." << std::endl;
+        return 0;
+    }
     output2.open(velDat);
+    if(!output2){
+        std::cout << velDat << " failed to open. Aborting." << std::endl;
+        return 0;
+    }
     output3.open(accDat);
+    if(!output3){
+        std::cout << accDat << " failed to open. Aborting." << std::endl;
+        return 0;
+    }
 
     //get mass
     mass = calcMass(grf);
@@ -38,11 +50,15 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
     vel = 0;
     pos = 0;
 
+    //initialize peak to first value
+    peak = grf[0].second;
+
     //calculate values and output to file
     for(int i=0; i<grf.size(); i++){
         Vi = vel;
         Pi = pos;
-	
+    if(grf[i].second > peak)
+        peak = grf[i].second;
 	acc = calcAcc(grf[i].second, mass, Fg);
 	vel = calcVel(acc, time, Vi);
 	pos = calcPos(vel, time, Pi);
@@ -56,6 +72,9 @@ void	PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
     output1.close();
     output2.close();
     output3.close();
+
+    return peak;
+
 }
 
 

@@ -27,5 +27,6 @@ class Subject
         int sub;
         int trials;
         int cond;
+        double *peakValues;
 };
 #endif
