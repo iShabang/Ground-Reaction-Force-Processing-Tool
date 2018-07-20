@@ -14,7 +14,9 @@ No return value
 */
 
 void buildData(std::string fileName, int duration){
-   
+    //# of samples
+    int samples;
+
     //create an fstream object for reading
     std::ifstream input;
     std::ofstream output;
@@ -34,13 +36,22 @@ void buildData(std::string fileName, int duration){
 
     std::cout << "files were successful" << std::endl;
 
-    //Skip the first 13 lines of text
-    for(int i=0; i<13; i++){
+    //skip first 2 lines
+    for(int i=0; i<2; i++)
+        std::getline(input, garbage);
+
+    //get # of samples
+    getline(input, garbage, ':');
+    input >> samples;
+    std::cout << "samples = " << samples << std::endl;
+    
+    //Skip the remaining 10 lines of text
+    for(int i=0; i<11; i++){
 	    std::getline(input, garbage);
     }
 
     //Read in data points. Loop for number of miliseconds.
-    for(int i=0; i<duration; i++){
+    for(int i=0; i<samples; i++){
 	getline(input, time, '\t');
 	output << time << ' ';
 
@@ -63,6 +74,9 @@ No return value
 */
 void buildData2Plates(std::string fileName, const int &duration){
 
+    //# of samples
+    int samples, samplesa;
+
     //create input and output objects for reading and writing
     std::ifstream input;
     std::ofstream output;
@@ -78,13 +92,22 @@ void buildData2Plates(std::string fileName, const int &duration){
     input.open("Data/" + fileName + ".txt");
     std::cout << "opening " << fileName + ".txt" << std::endl;
 
-    //Skip the first 13 lines of text
-    for(int i=0; i<13; i++){
+    //skip first 2 lines
+    for(int i=0; i<2; i++)
+        std::getline(input, garbage);
+
+    //get # of samples
+    getline(input, garbage, ':');
+    input >> samples >> samplesa;
+    std::cout << "samples = " << samples << std::endl;
+    
+    //Skip the remaining 10 lines of text
+    for(int i=0; i<11; i++){
 	    std::getline(input, garbage);
     }
 
     //Read in data points. Loop for number of miliseconds.
-    for(int i=0; i<duration; i++){
+    for(int i=0; i<samples; i++){
 	    getline(input, time, '\t');
         T = std::stod(time);
 
@@ -100,24 +123,19 @@ void buildData2Plates(std::string fileName, const int &duration){
         vectb.push_back(std::make_pair(T, Fz2));
 
     }
-    std::cout << "vectors built" << std::endl;
     if(vecta[0].second < 10){
-        std::cout << "vecta starting at zero" << std::endl;
         int timeFound = 0;
         while(vecta[timeFound].second < 10)
             timeFound++;
         combinePlates(fileName, timeFound, duration, vectb, vecta);
-        std::cout << "plates combines" << std::endl;
     }
 
     else if(vectb[0].second < 10){
-        std::cout << "vectb starting at 0" << std::endl;
         int timeFound = 0;
         while(vectb[timeFound].second < 10){
             timeFound++;
         }
         combinePlates(fileName, timeFound, duration, vecta, vectb);
-        std::cout << "plates combined" << std::endl;
     }
 
 }
@@ -186,7 +204,6 @@ void autoRead2Plates(int sub, int cond, int numTrials, int duration){
     j = i/2 + 1;
     trial = std::to_string(j);
     fullName = "S" + subject + "C" + condition + "T" + trial;
-    std::cout << "reading " << fullName << std::endl;
     buildData2Plates(fullName, duration);
   } 
 
@@ -214,7 +231,6 @@ int testNumPlates(std::string fileName){
         std::getline(input, garbage);
     while(true){
         input >> N;
-        std::cout << "N = " << N << std::endl;
         if(N == 'N')
             numN++;
         else
@@ -252,7 +268,6 @@ void fetchData(std::string fileName, std::vector<std::pair<double, double> > &ve
 *********************************************************************************************/
 
 void combinePlates(std::string fileName, double timeFound, int duration, VEC &vect1, VEC &vect2){
-    std::cout << "combining plates" << std::endl;
     std::ofstream output;
     output.open("Results/" + fileName + ".dat");
     for(int i=0; i<timeFound; i++)
