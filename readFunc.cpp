@@ -34,8 +34,6 @@ void buildData(std::string fileName, int duration){
     if(!output)
         std::cout << "output failed!!" << std::endl;
 
-    std::cout << "files were successful" << std::endl;
-
     //skip first 2 lines
     for(int i=0; i<2; i++)
         std::getline(input, garbage);
@@ -43,7 +41,6 @@ void buildData(std::string fileName, int duration){
     //get # of samples
     getline(input, garbage, ':');
     input >> samples;
-    std::cout << "samples = " << samples << std::endl;
     
     //Skip the remaining 10 lines of text
     for(int i=0; i<11; i++){
@@ -90,7 +87,6 @@ void buildData2Plates(std::string fileName, const int &duration){
     std::string time, Fz1String, Fz2String, garbage;
  
     input.open("Data/" + fileName + ".txt");
-    std::cout << "opening " << fileName + ".txt" << std::endl;
 
     //skip first 2 lines
     for(int i=0; i<2; i++)
@@ -99,7 +95,6 @@ void buildData2Plates(std::string fileName, const int &duration){
     //get # of samples
     getline(input, garbage, ':');
     input >> samples >> samplesa;
-    std::cout << "samples = " << samples << std::endl;
     
     //Skip the remaining 10 lines of text
     for(int i=0; i<11; i++){
