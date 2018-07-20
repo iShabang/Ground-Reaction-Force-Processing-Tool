@@ -61,3 +61,9 @@ All messages were deleted except for errors
 All data/graphs/results go into separate folders
 
 
+***********************************************
+7/20/2018
+***********************************************
+
+PVA function now returns the peak value of the given data set
+Values are stored in a 2D row major array in subClass (peakValues)
