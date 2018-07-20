@@ -12,8 +12,6 @@ void buildData2Plates(std::string fileName);
 
 void autoRead(int sub, int cond, int numTrials);
 
-void autoRead2Plates(int sub, int cond, int numTrials, int duration);
-
 int testNumPlates(std::string);
 
 void fetchData(std::string, std::vector<std::pair<double, double> > &);

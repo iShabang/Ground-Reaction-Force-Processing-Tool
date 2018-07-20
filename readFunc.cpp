@@ -137,21 +137,13 @@ void buildData2Plates(std::string fileName){
 
 
 
+/*********************************************************************************************
+ * Function name:      autoRead
+ * Parameters:         which subject, # of conditions, # of trials
+ * Return Value:       NONE
+ * Purpose:            loops until all data for a subject is read and parsed
 
-/*AUTO READ FUNCTION
-1. Function will take in a string consisting of "Name" + "movement".
-Using an index, we will add a number to the end of the string.
-This will be a filename (file must exist and number of files must be known)
-example: let i = 3, name = "Shaun", movment = "VertJump"
-convert i to character "3"
-add strings together to form "ShaunVertJump3"
-
-2. reads data using readVector
-
-3. loop until all files are read (until i = # of files)
-
-*/
-
+*********************************************************************************************/
 void autoRead(int sub, int cond, int numTrials){
 
   std::string trial, subject, condition, fullName;
@@ -177,39 +169,9 @@ void autoRead(int sub, int cond, int numTrials){
 }
 
 
-
-
-
-
-/*AUTO READ 2 PLATES
-Function reads in all data for subject that used two force platforms
-Each trial will yield two separate vectors
-
-*/
-void autoRead2Plates(int sub, int cond, int numTrials, int duration){
-
-  std::string trial, subject, condition, fullName;
-
-  subject = std::to_string(sub);
-  condition = std::to_string(cond);
- 
-  int j = 0;  
-
-  for(int i=1; i < numTrials*2; i = i+2){
-    j = i/2 + 1;
-    trial = std::to_string(j);
-    fullName = "S" + subject + "C" + condition + "T" + trial;
-    buildData2Plates(fullName);
-  } 
-
-  return;
-
-}
-
-
 /*********************************************************************************************
  * Function name:      testNumPlates
- * Paramters:          file name to be opened for testing
+ * Parameters:         file name to be opened for testing
  * Return Value:       number of plates captured
  * Purpose:            reads the header of the file passed and determines the number of plates
                        captured
@@ -255,7 +217,7 @@ void fetchData(std::string fileName, std::vector<std::pair<double, double> > &ve
 
 /*********************************************************************************************
  * Function name:      combinePlates
- * Paramters:          file name to be created, time found, duration, start vector, end vector 
+ * Parameters:          file name to be created, time found, duration, start vector, end vector 
  * Return Value:       NONE
  * Purpose:            combines two data sets from plates and puts them into one file for 
                        processing
