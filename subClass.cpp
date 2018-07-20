@@ -50,8 +50,7 @@ std::string Subject::buildString(int c)
  * Parameters:      condition and trial requested
  * Return Type:     String
  * Purpose:         Buids the file name adding two string together. 
- *                  victorvert <-> victorback
-*****************************************************************************************/
+ *                  victorvert <-> victorback *****************************************************************************************/
 std::string Subject::buildString(int c, int t)
 {
     std::string subject, condition, trial;
@@ -94,12 +93,10 @@ void Subject::createPVA_DAT(){
         for(int j=1; j<=trials; j++){
             index = (i-1) * trials + (j-1);
             fileName = buildString(i,j);
-            std::cout << fileName << '\t';
             fetchData(fileName, vect);
             peakValues[index] = PVA(fileName, vect);
             if(peakValues[index] == 0)
                 return;
-            std::cout << peakValues[index] << std::endl;
             vect.clear();
             vect.shrink_to_fit();
         }
