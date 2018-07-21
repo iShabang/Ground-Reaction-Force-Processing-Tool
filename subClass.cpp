@@ -129,4 +129,24 @@ void Subject::graphAll(){
     }
 }
 
+/*****************************************************************************************
+ * Function Name:   avgPeak()
+ * Parameters:      NONE
+ * Return Type:     Void
+ * Purpose:         finds the average peak values for all conditions
 
+*****************************************************************************************/
+void Subject::avgPeak(){
+    double sum, avg;
+    int index;
+    for(int i=0; i<cond; i++){
+        sum = 0;
+        for(int j=0; j<trials; j++){
+            index = i * cond + j;
+            sum = sum + peakValues[index];
+        }
+        avg = sum / (double)trials;
+        std::cout << "S" << sub << "C" << i+1 << '\t' << avg << std::endl;
+    }
+    return;
+}

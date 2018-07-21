@@ -17,6 +17,7 @@ class Subject
         void createDATfiles();
         void createPVA_DAT();
         void graphAll();
+        void avgPeak();
         //void getData()                                        // calls autoRead()
         //double getPVA();                                        // that is being built
 

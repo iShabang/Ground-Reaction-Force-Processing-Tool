@@ -35,5 +35,9 @@ int main()
     sub2.graphAll();
     sub3.graphAll();
 
+    sub1.avgPeak();
+    sub2.avgPeak();
+    sub3.avgPeak();
+
     return 0;
 }
