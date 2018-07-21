@@ -142,7 +142,7 @@ void Subject::avgPeak(){
     for(int i=0; i<cond; i++){
         sum = 0;
         for(int j=0; j<trials; j++){
-            index = i * cond + j;
+            index = i * trials + j;
             sum = sum + peakValues[index];
         }
         avg = sum / (double)trials;
