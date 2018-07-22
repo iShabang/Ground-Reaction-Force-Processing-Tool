@@ -17,7 +17,8 @@ class Subject
         void createDATfiles();
         void createPVA_DAT();
         void graphAll();
-        void avgPeak();
+        void avgPeak(std::ofstream&);
+        void avgPeakVelocity(std::ofstream&);
         //void getData()                                        // calls autoRead()
         //double getPVA();                                        // that is being built
 
@@ -29,5 +30,6 @@ class Subject
         int trials;
         int cond;
         double *peakValues;
+        double *peakVelocity;
 };
 #endif

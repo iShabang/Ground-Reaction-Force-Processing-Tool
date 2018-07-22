@@ -8,7 +8,7 @@ parameters:
 	grf - vector containing ground reaction force vs time
 
 */
-double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
+double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf, double& peakVelocity){
 
     std::ofstream output1, output2, output3;
 
@@ -52,6 +52,7 @@ double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
 
     //initialize peak to first value
     peak = grf[0].second;
+    peakVelocity = vel;
 
     //calculate values and output to file
     for(int i=0; i<grf.size(); i++){
@@ -61,6 +62,8 @@ double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf){
         peak = grf[i].second;
 	acc = calcAcc(grf[i].second, mass, Fg);
 	vel = calcVel(acc, time, Vi);
+    if(vel > peakVelocity)
+        peakVelocity = vel;
 	pos = calcPos(vel, time, Pi);
 
 	output1 << grf[i].first << ' ' << pos << '\n';

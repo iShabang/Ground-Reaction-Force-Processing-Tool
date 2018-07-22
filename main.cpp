@@ -10,14 +10,10 @@
 
 int main()
 {
-    std::ifstream input;
-    Gnuplot gp;
-
+    std::ofstream output;
 /*******************************************************************
  * This section will ask for necessary varaibles to create an object
 *******************************************************************/
-    std::cout << "Welcome to the force platform data collection program." << std::endl;
-	std::cout << "We will ask you to fill out a couple of inputs to continue with our program." << std::endl;
 
     Subject sub1(1,2,5);
     Subject sub2(2,2,5);
@@ -31,13 +27,25 @@ int main()
     sub2.createPVA_DAT();
     sub3.createPVA_DAT();
 
+/*
     sub1.graphAll();
     sub2.graphAll();
     sub3.graphAll();
+*/
 
-    sub1.avgPeak();
-    sub2.avgPeak();
-    sub3.avgPeak();
+    output.open("AveragePeakValues.txt");
+    output << "Average Peak GRF" << '\n';
+    sub1.avgPeak(output);
+    sub2.avgPeak(output);
+    sub3.avgPeak(output);
+    output << '\n';
+
+    output << "Average Peak Velocity" << '\n';
+    sub1.avgPeakVelocity(output);
+    sub2.avgPeakVelocity(output);
+    sub3.avgPeakVelocity(output);
+    output.close();
+
 
     return 0;
 }
