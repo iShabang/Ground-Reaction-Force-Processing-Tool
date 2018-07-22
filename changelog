@@ -78,3 +78,9 @@ Values are stored in a 2D row major array in subClass (peakValues)
 - fixed an issue where average peak GRF was computing the incorrect value for average
 
 
+***********************************************
+7/22/2018
+***********************************************
+- program now creates directores automatically if not already existing
+- program prompts user to copy the data into the Data folder before continuing
+
