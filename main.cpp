@@ -34,6 +34,13 @@ int main()
 */
 
     output.open("AveragePeakValues.txt");
+
+    output << "Average Peak Takeoff GRF" << '\n';
+    sub1.avgPeakTakeoff(output);
+    sub2.avgPeakTakeoff(output);
+    sub3.avgPeakTakeoff(output);
+    output << '\n';
+
     output << "Average Peak GRF" << '\n';
     sub1.avgPeak(output);
     sub2.avgPeak(output);
@@ -44,6 +51,7 @@ int main()
     sub1.avgPeakVelocity(output);
     sub2.avgPeakVelocity(output);
     sub3.avgPeakVelocity(output);
+
     output.close();
 
 

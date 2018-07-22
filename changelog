@@ -73,10 +73,8 @@ Values are stored in a 2D row major array in subClass (peakValues)
 ***********************************************
 7/21/2018
 ***********************************************
-- now finds the average peak GRF and average peak Velocity
+- now finds the average peak GRF, average peak Velocity, and average take off GRF
 - data is output to a new file called AveragePeakValues.txt
 - fixed an issue where average peak GRF was computing the incorrect value for average
-
-
 
 

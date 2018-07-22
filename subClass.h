@@ -19,6 +19,7 @@ class Subject
         void graphAll();
         void avgPeak(std::ofstream&);
         void avgPeakVelocity(std::ofstream&);
+        void avgPeakTakeoff(std::ofstream&);
         //void getData()                                        // calls autoRead()
         //double getPVA();                                        // that is being built
 
@@ -31,5 +32,6 @@ class Subject
         int cond;
         double *peakValues;
         double *peakVelocity;
+        double *peakTakeoff;
 };
 #endif

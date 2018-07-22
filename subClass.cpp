@@ -27,6 +27,7 @@ Subject::Subject(int s, int c, int t)
     trials = t;
     peakValues = new double[c*t];
     peakVelocity = new double[c*t];
+    peakTakeoff = new double[c*t];
 }
 
 /*****************************************************************************************
@@ -95,7 +96,7 @@ void Subject::createPVA_DAT(){
             index = (i-1) * trials + (j-1);
             fileName = buildString(i,j);
             fetchData(fileName, vect);
-            peakValues[index] = PVA(fileName, vect, peakVelocity[index]);
+            peakValues[index] = PVA(fileName, vect, peakVelocity[index], peakTakeoff[index]);
             if(peakValues[index] == 0)
                 return;
             vect.clear();
@@ -180,6 +181,36 @@ void Subject::avgPeakVelocity(std::ofstream& output){
         for(int j=0; j<trials; j++){
             index = i * trials + j;
             sum = sum + peakVelocity[index];
+        }
+        avg = sum / (double)trials;
+        output << "S" << sub << "C" << i+1 << '\t' << avg << "\n";
+    }
+    if(close)
+        output.close();
+    return;
+}
+
+/*****************************************************************************************
+ * Function Name:   avgPeakTakeoff()
+ * Parameters:      NONE
+ * Return Type:     Void
+ * Purpose:         finds the average peak takeoff force for all conditions
+
+*****************************************************************************************/
+
+void Subject::avgPeakTakeoff(std::ofstream& output){
+    bool close = false;
+    double sum, avg;
+    int index;
+    if(!output.is_open()){
+        output.open("AveragePeakValues.txt", std::ofstream::app);
+        close = true;
+    }
+    for(int i=0; i<cond; i++){
+        sum = 0;
+        for(int j=0; j<trials; j++){
+            index = i * trials + j;
+            sum = sum + peakTakeoff[index];
         }
         avg = sum / (double)trials;
         output << "S" << sub << "C" << i+1 << '\t' << avg << "\n";
