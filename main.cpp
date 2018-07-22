@@ -14,6 +14,15 @@ int main()
 /*******************************************************************
  * This section will ask for necessary varaibles to create an object
 *******************************************************************/
+    //boost filesystem objects
+    boost::filesystem::path p("Data/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+    std::cout << "Please make sure all data is in Data/. Press enter to continue ... ";
+    std::cin.get();
+
 
     Subject sub1(1,2,5);
     Subject sub2(2,2,5);
@@ -27,13 +36,16 @@ int main()
     sub2.createPVA_DAT();
     sub3.createPVA_DAT();
 
-/*
     sub1.graphAll();
     sub2.graphAll();
     sub3.graphAll();
-*/
 
-    output.open("AveragePeakValues.txt");
+    p = "Results/Averages/";
+    s = status(p);
+    if(!boost::filesystem::is_directory(s))
+        boost::filesystem::create_directory(p);
+
+    output.open(p.string() + "AveragePeakValues.txt");
 
     output << "Average Peak Takeoff GRF" << '\n';
     sub1.avgPeakTakeoff(output);

@@ -115,17 +115,25 @@ void Subject::createPVA_DAT(){
 void Subject::graphAll(){
     Gnuplot gp;
     std::string fileName;
+
+    //boost filesystem objects
+    boost::filesystem::path p("Graphs/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
             fileName = buildString(i,j);
             gp << "set term postscript eps enhanced 'arial' 12 \n";
-            gp << "set output '" << "Graphs/" + fileName + ".eps'" << "\n";
-            gp << "plot '" << "Results/" + fileName + ".dat" << "'\n";
-            gp << "set output '" << "Graphs/" + fileName + "P.eps'" << "\n";
+            gp << "set output '" << p.string() + fileName + ".eps'" << "\n";
+            gp << "plot '" << "DAT Files/" + fileName + ".dat" << "'\n";
+            gp << "set output '" << p.string() +  fileName + "P.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "P.dat" << "'\n";
-            gp << "set output '" << "Graphs/" + fileName + "V.eps'" << "\n";
+            gp << "set output '" << p.string() + fileName + "V.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "V.dat" << "'\n";
-            gp << "set output '" << "Graphs/" + fileName + "A.eps'" << "\n";
+            gp << "set output '" << p.string() + fileName + "A.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "A.dat" << "'\n";
         }
     }
@@ -142,8 +150,16 @@ void Subject::avgPeak(std::ofstream& output){
     bool close = false;
     double sum, avg;
     int index;
+
+    //boost filesystem objects
+    boost::filesystem::path p("Results/Averages/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
     if(!output.is_open()){
-        output.open("AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
         close = true;
     }
     for(int i=0; i<cond; i++){
@@ -172,8 +188,16 @@ void Subject::avgPeakVelocity(std::ofstream& output){
     bool close = false;
     double sum, avg;
     int index;
+
+    //boost filesystem objects
+    boost::filesystem::path p("Results/Averages/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
     if(!output.is_open()){
-        output.open("AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
         close = true;
     }
     for(int i=0; i<cond; i++){
@@ -202,8 +226,16 @@ void Subject::avgPeakTakeoff(std::ofstream& output){
     bool close = false;
     double sum, avg;
     int index;
+
+    //boost filesystem objects
+    boost::filesystem::path p("Results/Averages/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
     if(!output.is_open()){
-        output.open("AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
         close = true;
     }
     for(int i=0; i<cond; i++){

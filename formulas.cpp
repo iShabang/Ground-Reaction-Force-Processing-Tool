@@ -1,6 +1,7 @@
 #include <vector>
 #include <fstream>
 #include "formulas.h"
+#include <boost/filesystem.hpp>
 
 /*calculate PVA
 Function calculates the PVA of the data passed in and outputs the data into separate .dat files for Position, Velocity, and Acceleration
@@ -16,25 +17,32 @@ double PVA(std::string fileName, std::vector<std::pair<double,double> > &grf, do
     bool takeoff = true;
     double mass, Fg, time, Vi, Pi, pos, vel, acc, peak;
 
+    //boost filesystem objects
+    boost::filesystem::path p("Results/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
     //create file names
     std::string posDat, velDat, accDat;
-    posDat = "Results/" + fileName + "P.dat";
-    velDat = "Results/" + fileName + "V.dat";
-    accDat = "Results/" + fileName + "A.dat";
+    posDat = p.string() + fileName + "P.dat";
+    velDat = p.string() + fileName + "V.dat";
+    accDat = p.string() + fileName + "A.dat";
 
     //open files
     output1.open(posDat);
-    if(!output1){
+    if(output1.fail()){
         std::cout << posDat << " failed to open. Aborting." << std::endl;
         return 0;
     }
     output2.open(velDat);
-    if(!output2){
+    if(output2.fail()){
         std::cout << velDat << " failed to open. Aborting." << std::endl;
         return 0;
     }
     output3.open(accDat);
-    if(!output3){
+    if(output3.fail()){
         std::cout << accDat << " failed to open. Aborting." << std::endl;
         return 0;
     }

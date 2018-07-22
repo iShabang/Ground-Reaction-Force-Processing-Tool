@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "readFunc.h"
+#include <boost/filesystem.hpp>
 
 #define VEC std::vector<std::pair<double,double> >
 
@@ -14,12 +15,20 @@ No return value
 */
 
 void buildData(std::string fileName){
+
     //# of samples
     int samples;
 
     //create an fstream object for reading
     std::ifstream input;
     std::ofstream output;
+
+    //boost filesystem objects
+    boost::filesystem::path p("DAT Files/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
 
     //String values for reading
     std::string time, Fz1String, Fz2String, garbage, ifileName, ofileName;
@@ -30,7 +39,7 @@ void buildData(std::string fileName){
     input.open("Data/" + ifileName);
     if(!input)
         std::cout << "input failed!!" << std::endl;
-    output.open("Results/" + ofileName);
+    output.open(p.string() + ofileName);
     if(!output)
         std::cout << "output failed!!" << std::endl;
 
@@ -80,6 +89,14 @@ void buildData2Plates(std::string fileName){
 
     double Fz1, Fz2, T;
 
+    //boost filesystem objects
+    boost::filesystem::path p("DAT Files/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
+
     VEC vecta;
     VEC vectb;
 
@@ -87,6 +104,10 @@ void buildData2Plates(std::string fileName){
     std::string time, Fz1String, Fz2String, garbage;
  
     input.open("Data/" + fileName + ".txt");
+    if(input.fail()){
+        std::cout << fileName << ".txt failed to open \n";
+        return;
+    }
 
     //skip first 2 lines
     for(int i=0; i<2; i++)
@@ -206,7 +227,7 @@ int testNumPlates(std::string fileName){
 void fetchData(std::string fileName, std::vector<std::pair<double, double> > &vect){
     std::ifstream input; 
     double time, force;
-    input.open("Results/" + fileName + ".dat");
+    input.open("DAT Files/" + fileName + ".dat");
     while(!input.eof()){
         input >> time >> force;
         vect.push_back(std::make_pair(time,force));
@@ -226,7 +247,19 @@ void fetchData(std::string fileName, std::vector<std::pair<double, double> > &ve
 
 void combinePlates(std::string fileName, double timeFound, int duration, VEC &vect1, VEC &vect2){
     std::ofstream output;
-    output.open("Results/" + fileName + ".dat");
+
+    //boost filesystem objects
+    boost::filesystem::path p("DAT Files/");
+    boost::filesystem::file_status s = status(p);
+    if(!boost::filesystem::is_directory(s)){
+        boost::filesystem::create_directory(p);
+    }
+
+    output.open(p.string() + fileName + ".dat");
+    if(output.fail()){
+        std::cout << fileName << ".dat failed to open \n";
+        return;
+    }
     for(int i=0; i<timeFound; i++)
         output << vect1[i].first << ' ' << vect1[i].second << '\n';
     for(int i=timeFound; i<duration; i++)
