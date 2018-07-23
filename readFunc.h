@@ -14,7 +14,7 @@ void autoRead(int sub, int cond, int numTrials);
 
 int testNumPlates(std::string);
 
-void fetchData(std::string, std::vector<std::pair<double, double> > &);
+bool fetchData(std::string, std::vector<std::pair<double, double> > &);
 
 void combinePlates(std::string, double, int, VEC &, VEC &);
 

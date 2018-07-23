@@ -37,10 +37,10 @@ void buildData(std::string fileName){
     ofileName = fileName + ".dat";
 
     input.open("Data/" + ifileName);
-    if(!input)
+    if(input.fail())
         std::cout << "input failed!!" << std::endl;
     output.open(p.string() + ofileName);
-    if(!output)
+    if(output.fail())
         std::cout << "output failed!!" << std::endl;
 
     //skip first 2 lines
@@ -205,6 +205,10 @@ int testNumPlates(std::string fileName){
     char N;
     int numN = 0;
     input.open("Data/" + fileName + ".txt");
+    if(!input){
+        std::cout << fileName << ".txt failed to open\n";
+        return 0;
+    }
     for(int i=0; i<12; i++)
         std::getline(input, garbage);
     while(true){
@@ -224,16 +228,20 @@ int testNumPlates(std::string fileName){
  * Purpose:         gets data from the given file and puts it in a vector for processing
 
 *****************************************************************************************/
-void fetchData(std::string fileName, std::vector<std::pair<double, double> > &vect){
+bool fetchData(std::string fileName, std::vector<std::pair<double, double> > &vect){
     std::ifstream input; 
     double time, force;
     input.open("DAT Files/" + fileName + ".dat");
+    if(!input){
+        std::cout << fileName << ".dat failed to open\n";
+        return true;
+    }
     while(!input.eof()){
         input >> time >> force;
         vect.push_back(std::make_pair(time,force));
    }
    input.close();
-   return;
+   return false;
 }
 
 /*********************************************************************************************

@@ -89,18 +89,24 @@ void Subject::createDATfiles(){
 *****************************************************************************************/
 void Subject::createPVA_DAT(){
     int index;
+    bool noData = false;
     std::string fileName;
     std::vector<std::pair<double, double> > vect;
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
             index = (i-1) * trials + (j-1);
             fileName = buildString(i,j);
-            fetchData(fileName, vect);
-            peakValues[index] = PVA(fileName, vect, peakVelocity[index], peakTakeoff[index]);
-            if(peakValues[index] == 0)
-                return;
-            vect.clear();
-            vect.shrink_to_fit();
+            noData = fetchData(fileName, vect);
+            if(noData){
+                std::cout << "No data found for " << fileName << "\n";
+            }
+            else if(!noData){
+                peakValues[index] = PVA(fileName, vect, peakVelocity[index], peakTakeoff[index]);
+                if(peakValues[index] == 0)
+                    return;
+                vect.clear();
+                vect.shrink_to_fit();
+            }
         }
     }
 }
@@ -118,6 +124,7 @@ void Subject::graphAll(){
 
     //boost filesystem objects
     boost::filesystem::path p("Graphs/");
+    boost::filesystem::path test;
     boost::filesystem::file_status s = status(p);
     if(!boost::filesystem::is_directory(s)){
         boost::filesystem::create_directory(p);
@@ -126,31 +133,38 @@ void Subject::graphAll(){
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
             fileName = buildString(i,j);
-            gp << "set term postscript eps enhanced 'arial_bold' 12 \n";
-            gp << "unset key \n";
-            gp << "set grid \n";
-            gp << "set xlabel 'Time (seconds)' \n";
+            test = "DAT Files/" + fileName + ".dat";
+            s = status(test);
+            if(!boost::filesystem::exists(s)){
+                std::cout << "Graph data for " << fileName << " does not exist\n";
+            }
+            else{
+                gp << "set term postscript eps enhanced 'arial_bold' 12 \n";
+                gp << "unset key \n";
+                gp << "set grid \n";
+                gp << "set xlabel 'Time (seconds)' \n";
 
-            gp << "set ylabel 'Newtons' \n";
-            gp << "set title '" << fileName << " GRF vs Time'\n";
-            gp << "set output '" << p.string() + fileName + ".eps'" << "\n";
-            gp << "plot [:] [:7000] '" << "DAT Files/" + fileName + ".dat" << "'\n";
+                gp << "set ylabel 'Newtons' \n";
+                gp << "set title '" << fileName << " GRF vs Time'\n";
+                gp << "set output '" << p.string() + fileName + ".eps'" << "\n";
+                gp << "plot [:] [:7000] '" << "DAT Files/" + fileName + ".dat" << "'\n";
 
 
-            gp << "set ylabel 'Position (Meters)' \n";
-            gp << "set title '" << fileName << " Position vs Time' \n";
-            gp << "set output '" << p.string() +  fileName + "P.eps'" << "\n";
-            gp << "plot '" << "Results/" + fileName + "P.dat" << "'\n";
+                gp << "set ylabel 'Position (Meters)' \n";
+                gp << "set title '" << fileName << " Position vs Time' \n";
+                gp << "set output '" << p.string() +  fileName + "P.eps'" << "\n";
+                gp << "plot '" << "Results/" + fileName + "P.dat" << "'\n";
 
-            gp << "set ylabel 'Velocity (M/s)' \n";
-            gp << "set title '" << fileName << " Velocity vs Time' \n";
-            gp << "set output '" << p.string() + fileName + "V.eps'" << "\n";
-            gp << "plot '" << "Results/" + fileName + "V.dat" << "'\n";
+                gp << "set ylabel 'Velocity (M/s)' \n";
+                gp << "set title '" << fileName << " Velocity vs Time' \n";
+                gp << "set output '" << p.string() + fileName + "V.eps'" << "\n";
+                gp << "plot '" << "Results/" + fileName + "V.dat" << "'\n";
 
-            gp << "set ylabel 'Acceleration (M/s^2)' \n";
-            gp << "set title '" << fileName << " Acceleration vs Time' \n";
-            gp << "set output '" << p.string() + fileName + "A.eps'" << "\n";
-            gp << "plot '" << "Results/" + fileName + "A.dat" << "'\n";
+                gp << "set ylabel 'Acceleration (M/s^2)' \n";
+                gp << "set title '" << fileName << " Acceleration vs Time' \n";
+                gp << "set output '" << p.string() + fileName + "A.eps'" << "\n";
+                gp << "plot '" << "Results/" + fileName + "A.dat" << "'\n";
+            }
 
         }
     }
