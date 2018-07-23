@@ -83,4 +83,7 @@ Values are stored in a 2D row major array in subClass (peakValues)
 ***********************************************
 - program now creates directores automatically if not already existing
 - program prompts user to copy the data into the Data folder before continuing
+- graphs now have axis titles, custom scale, graph titles, and grid. 
+- removed key from graphs
+
 
