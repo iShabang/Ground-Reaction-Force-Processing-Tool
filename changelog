@@ -85,5 +85,9 @@ Values are stored in a 2D row major array in subClass (peakValues)
 - program prompts user to copy the data into the Data folder before continuing
 - graphs now have axis titles, custom scale, graph titles, and grid. 
 - removed key from graphs
+- now checks if files exist. Any data files that are missing will be skipped.
+- appropriate error messages will be printed to the screen
+
+
 
 
