@@ -126,15 +126,32 @@ void Subject::graphAll(){
     for(int i=1; i<=cond; i++){
         for(int j=1; j<=trials; j++){
             fileName = buildString(i,j);
-            gp << "set term postscript eps enhanced 'arial' 12 \n";
+            gp << "set term postscript eps enhanced 'arial_bold' 12 \n";
+            gp << "unset key \n";
+            gp << "set grid \n";
+            gp << "set xlabel 'Time (seconds)' \n";
+
+            gp << "set ylabel 'Newtons' \n";
+            gp << "set title '" << fileName << " GRF vs Time'\n";
             gp << "set output '" << p.string() + fileName + ".eps'" << "\n";
-            gp << "plot '" << "DAT Files/" + fileName + ".dat" << "'\n";
+            gp << "plot [:] [:7000] '" << "DAT Files/" + fileName + ".dat" << "'\n";
+
+
+            gp << "set ylabel 'Position (Meters)' \n";
+            gp << "set title '" << fileName << " Position vs Time' \n";
             gp << "set output '" << p.string() +  fileName + "P.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "P.dat" << "'\n";
+
+            gp << "set ylabel 'Velocity (M/s)' \n";
+            gp << "set title '" << fileName << " Velocity vs Time' \n";
             gp << "set output '" << p.string() + fileName + "V.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "V.dat" << "'\n";
+
+            gp << "set ylabel 'Acceleration (M/s^2)' \n";
+            gp << "set title '" << fileName << " Acceleration vs Time' \n";
             gp << "set output '" << p.string() + fileName + "A.eps'" << "\n";
             gp << "plot '" << "Results/" + fileName + "A.dat" << "'\n";
+
         }
     }
 }
