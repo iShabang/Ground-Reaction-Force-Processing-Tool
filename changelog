@@ -89,5 +89,18 @@ Values are stored in a 2D row major array in subClass (peakValues)
 - appropriate error messages will be printed to the screen
 
 
+***********************************************
+7/27/2018
+***********************************************
+- Added Main Menu
+- Added Input menu
+- Added Calculations menu
+- Added Graphing menu
+- Average max values now go into seperate files
+- Now have option to process one subject instead of all subjects
+
+Issues:
+- Average max value files are amended each run. Need to find a way to test if file needs 
+to be overwritten. Each run just adds on to the previous one. 
 
 
