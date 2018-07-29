@@ -1,5 +1,5 @@
-read: main.o readFunc.o formulas.o subClass.o
-	g++ -g main.o readFunc.o formulas.o subClass.o -o read -lboost_iostreams -lboost_system -lboost_filesystem
+edpt: main.o readFunc.o formulas.o subClass.o
+	g++ -g main.o readFunc.o formulas.o subClass.o -o edpt -lboost_iostreams -lboost_system -lboost_filesystem
 
 
 main.o: main.cpp 

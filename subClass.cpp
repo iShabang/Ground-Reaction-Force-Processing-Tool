@@ -190,9 +190,10 @@ void Subject::avgPeak(std::ofstream& output){
     }
 
     if(!output.is_open()){
-        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "Average Peak Landing Force.txt", std::ofstream::app);
         close = true;
     }
+
     for(int i=0; i<cond; i++){
         sum = 0;
         for(int j=0; j<trials; j++){
@@ -228,7 +229,7 @@ void Subject::avgPeakVelocity(std::ofstream& output){
     }
 
     if(!output.is_open()){
-        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "Average Peak Velocity.txt", std::ofstream::app);
         close = true;
     }
     for(int i=0; i<cond; i++){
@@ -266,7 +267,7 @@ void Subject::avgPeakTakeoff(std::ofstream& output){
     }
 
     if(!output.is_open()){
-        output.open(p.string() + "AveragePeakValues.txt", std::ofstream::app);
+        output.open(p.string() + "Average Maximum Force During Jump Phase.txt", std::ofstream::app);
         close = true;
     }
     for(int i=0; i<cond; i++){
