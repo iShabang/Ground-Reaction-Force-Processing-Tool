@@ -7,35 +7,54 @@
 void inputData(Subject **, int);
 void calculations(Subject **, int);
 void graphing(Subject **, int);
+void settings();
+void changeInfo();
 
 int main()
 {
     std::ofstream output;
+    std::ifstream input;
 /*******************************************************************
  * This section will ask for necessary variables to create an object
+   on first run. Information is saved and used on future runs.
 *******************************************************************/
 
     Subject **subjects; 
     int choice = 1, numSub, numCond, numTrials;
 
-    system("clear");
-    std::cout << "Enter number of subjects: "; std::cin >> numSub;
-    std::cout << "Enter number of conditions: "; std::cin >> numCond;
-    std::cout << "Enter number of trials: "; std::cin >> numTrials;
+    input.open("info.txt");
+    if(!input){
+        system("clear");
+        std::cout << "Enter number of subjects: "; std::cin >> numSub;
+        std::cout << "Enter number of conditions: "; std::cin >> numCond;
+        std::cout << "Enter number of trials: "; std::cin >> numTrials;
+        output.open("info.txt");
+        output << numSub << ' ' << numCond << ' ' << numTrials << '\n';
+        output.close();
+    }
+    else{
+        input >> numSub >> numCond >> numTrials;
+        input.close();
+    }
 
-//Create objects with user specified parameters
+/*******************************************************************
+ * Create objects with user specified parameters
+*******************************************************************/
     subjects = new Subject*[numSub];
     for(int i=0; i<numSub; i++){
         subjects[i] = new Subject(i+1, numCond, numTrials);
     }
 
-//main menu
-    while(choice != 4){
+/*******************************************************************
+ * Main Menu
+*******************************************************************/
+    while(choice != 5){
         system("clear");
         std::cout << "1. Input Data \n";
         std::cout << "2. Calculations \n";
         std::cout << "3. Graphing \n";
-        std::cout << "4. Exit \n";
+        std::cout << "4. Settings \n";
+        std::cout << "5. Exit \n";
 
 
         std::cin >> choice;
@@ -46,7 +65,10 @@ int main()
                     break;
             case 3: graphing(subjects, numSub);
                     break;
-            case 4: break;
+            case 4: settings(); 
+                    break;
+
+            case 5: break;
         }
         
         
@@ -195,4 +217,47 @@ void graphing(Subject **subjects, int numSub){
     }
 }
 
+/****************************************************************************
+Function Name:      settings
+Parameters:         NONE
+Return Value:       void
+Purpose:            Menu for changing base information
+****************************************************************************/
 
+void settings(){
+    int choice = 0;
+    while(choice != 2){
+        system("clear");
+        std::cout << "1. # of Subjects, Conditions, Trials \n";
+        std::cout << "2. Previous menu... \n";
+        std::cin >> choice;
+        switch(choice){
+            case 1: changeInfo(); 
+                    break;
+            case 2: break;
+            default: std::cout << "Invalid option \n";
+        }
+    }
+}
+
+
+/****************************************************************************
+Function Name:      changeInfo
+Parameters:         NONE
+Return Value:       void
+Purpose:            requests new # of subjects, conditions, and trials from 
+                    the user and overwrites info.txt
+****************************************************************************/
+
+void changeInfo(){
+    std::ofstream output;
+    int numSub, numCond, numTrials;
+    system("clear");
+    std::cout << "Enter number of subjects: "; std::cin >> numSub;
+    std::cout << "Enter number of conditions: "; std::cin >> numCond;
+    std::cout << "Enter number of trials: "; std::cin >> numTrials;
+    output.open("info.txt");
+    output << numSub << ' ' << numCond << ' ' << numTrials << '\n';
+    output.close();
+    return;
+}
